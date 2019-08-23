@@ -1,0 +1,150 @@
+<div style="background: white">
+
+    <div class="nav-left-formComplete" ng-show="!cacheNav">
+        <div class="btn-block" style="margin: 10px 0px 30px 0px">
+            <button class="pull-right" ng-click="cacher(true)"><i class="fa fa-chevron-left"></i></button>
+        </div>
+        <div class="nav-left-formComplete-cadre">
+            <a href="#" class="btn btn-default btn-block" role="button">ACCUEIL</a>
+            <div class="liste-org-units-formComplete">
+                <div ng-if="loadingOrgUnits">
+                    <label>Chargement en cours ... </label>
+                    <br>
+                    <div ng-if="patientez">
+                        <label>{{nbreTelecharger}} / {{nbreTotal}}</label>
+                    </div>
+                    <img src="img/ring-alt.gif" width="50px" height="50px">
+                </div>
+
+                <abn-tree tree-data="arbre" tree-control="my_tree" on-select="my_tree_handler(branch)"
+                          expand-level="2"></abn-tree>
+            </div>
+        </div>
+    </div>
+
+    <div ng-class="{'decalage': !cacheNav}">
+        <div ng-show="cacheNav" style="float: left; margin-top: 10px">
+            <button class="pull-left" ng-click="cacher(false)"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="nav-right-formsComplete">
+            <div>
+                <fieldset class="fieldset">
+                    <div class="labelSelect">
+                        <label class="labelSelect"><input type="radio" ng-model="module" value="selected"
+                                                          ng-click="radioSelect(module)">Pour l'unité d'organisation
+                            selectionée</label>
+                        <label class="labelSelect"><input type="radio" ng-model="module" value="children"
+                                                          ng-click="radioSelect(module)">Pour les descendents de
+                            l'unité d'organisation selectionée</label>
+                    </div>
+                    <table style="margin-top: 20px">
+                        <tr>
+                            <td><label class="td-marge" for="nomOrgUnit">Unité d'organisation</label></td>
+                            <td><input type="text" id="nomOrgUnit" size="60" readonly
+                                       placeholder="choisissez l'unité d'organisation" ng-model="facility.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="nomTypePeriod">Type periode</label></td>
+                            <td><select id="nomTypePeriod" ng-model="typePeriode" ng-disabled="!etatDistrict"
+                                        ng-change="choisirPeriode(typePeriode)">
+                                <option ng-repeat="periode in collectePeriodeType">{{periode}}</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td><label for="nomProgram">Ensemble de donnée</label></td>
+                            <td><select id="nomProgram" ng-model="dataSet" ng-disabled="loadingDataSet"
+                                        style="width: 350px"
+                                        ng-options="prog.id as prog.name for prog in collecteDataSet | orderBy: 'name'">
+                            </select><img ng-show="loadingDataSet" src="img/reload.gif" width="20px" height="20px">
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><label for="perioddebut">periode de </label></td>
+                            <td>
+                                <quick-datepicker style="font-size: 9pt;" ng-if="affichePeriod" id="perioddebut"
+                                                  ng-model='period.debut' disable-timepicker='true'
+                                                  label-format="MMMM yyyy" date-format='dd-MM-yyyy'
+                                                  date-filter='datesMaxfin'
+                                                  placeholder='période'></quick-datepicker>
+
+                                <label for="periodfin" ng-if="affichePeriod"> à </label>
+                                <quick-datepicker style="font-size: 9pt;" id="periodfin" ng-model='period.fin'
+                                                  disable-timepicker='true'
+                                                  label-format="MMMM yyyy" date-format='dd-MM-yyyy'
+                                                  date-filter='datesMaxfin'
+                                                  placeholder='période'></quick-datepicker>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-default" ng-disabled="loadingAllDataSet" ng-click="go()">
+                                    Executer
+                                </button>
+                                <img ng-show="loadingAllDataSet" src="img/reload.gif" width="30px" height="30px">
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+            <p></p>
+            <div ng-if="AttenteChargement" style="margin-top: 20%">
+                <div class="text-center" id="example-caption-1">Exécution à&hellip; {{bars}}%</div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                         aria-valuenow="{{bars}}" aria-valuemin="0" aria-valuemax="100"
+                         ng-style="{'width': bars+'%'}">
+                        <span class="text-center"></span>
+                    </div>
+                </div>
+                <img src="img/ring-alt.gif" style="margin-left: 30%;">
+            </div>
+            <div ng-show="chargement && !etatDistrict">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Ensemble de donnée</th>
+                        <th ng-repeat="entete in collecteDate">{{entete.name}}</th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="complete in collecteComplete | orderBy: 'dataSet'">
+                        <td>{{complete.dataSet}}</td>
+                        <td ng-repeat="mois in complete.periode" class="centrage" colspan="{{mois.fusion}}"><i
+                                ng-if="mois.affiche"
+                                ng-class="{'fa fa-check vert gi-2x': complete[mois.mois], 'fa fa-times rouge gi-2x': !complete[mois.mois]}"></i><i
+                                ng-if="!mois.affiche" class="fa fa-minus bleue gi-2x"></i></td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="chargement && etatDistrict">
+                <div>
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th class="cellule-size-name">Unité d'organisation</th>
+                            <th ng-repeat="dataSets in dataSetChildrens" class="cellule-size">{{dataSets.name}}
+                                <!-- / {{dataSets.id}}--></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <table class="table table-bordered table-striped table-hover">
+                        <tr ng-repeat="orgunit in lesOrgUnit" ng-class="{'select-line': orgunit.id==orgSelect}"
+                            ng-click="Select(orgunit.id)">
+                            <td class="cellule-size-name">{{orgunit.name}}</td>
+                            <td ng-repeat="dataset in orgunit.dataSets" class="cellule-size"><i
+                                    ng-if="dataset.existe"
+                                    ng-class="{'fa fa-check vert gi-2x': dataset.etat, 'fa fa-times rouge gi-2x': !dataset.etat}"></i><i
+                                    ng-if="!dataset.existe" class="fa fa-minus bleue gi-2x"></i>
+                                <!--{{dataset.id}}--></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

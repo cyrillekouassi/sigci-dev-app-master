@@ -1,0 +1,66 @@
+<div class="finfo">
+    <div style="margin: 10px;">
+        <table>
+            <tr>
+                <td>Data Sets </td>
+                <td><select ng-model="dataSet" ng-change="chargeDataSet()"
+                            style="width: 350px"
+                            ng-options="datasat.id as datasat.name for datasat in collecteDataSets | orderBy: 'name'">
+                </select></td>
+                <td><button ng-click="AllDataElements()">ALL DATA ELEMENTS</button></td>
+                <td><button ng-click="allIndicateurs()">LES INDICATEURS</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-if="ExeEnCours">
+        <img src="img/reload.gif" alt="">
+    </div>
+    <div ng-if="!ExeEnCours">
+        <div ng-if="!resulat">
+            {{InfoResultat}}
+        </div>
+        <div ng-if="resulat">
+            <div ng-if="elementInfo">
+                <table class="structure">
+                    <tr>
+                        <th>Data Elements Name</th>
+                        <th>Data Elements ID</th>
+                        <th>categoryCombo</th>
+                        <th>categoryCombo id</th>
+                        <th>categoryOptionCombo</th>
+                        <th>categoryOptionCombo id</th>
+                        <th>ElementID.catComboOptID</th>
+                    </tr>
+                    <tr ng-repeat="dataElements in collectData">
+                        <td ng-if="dataElements.name" rowspan="{{dataElements.fusion}}">{{dataElements.name}}</td>
+                        <td ng-if="dataElements.id" rowspan="{{dataElements.fusion}}">{{dataElements.id}}</td>
+                        <td ng-if="dataElements.categoryComboName" rowspan="{{dataElements.fusion}}">{{dataElements.categoryComboName}}</td>
+                        <td ng-if="dataElements.categoryComboId" rowspan="{{dataElements.fusion}}">{{dataElements.categoryComboId}}</td>
+                        <td>{{dataElements.categoryComboOptionName}}</td>
+                        <td>{{dataElements.categoryComboOptionId}}</td>
+                        <td style="white-space: nowrap">{{dataElements.eltIDoptionID}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-if="!elementInfo">
+                <h3 style="text-align: center">Indicateurs</h3>
+                <table class="structure">
+                    <tr>
+                        <th>Nom</th>
+                        <th>ID</th>
+                    </tr>
+                    <tr ng-repeat="indicat in collectIndicators">
+                        <td>{{indicat.name}}</td>
+                        <td>{{indicat.id}}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+

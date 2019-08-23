@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>SIGCI Developpment</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="img/icons/id_card.png"/>
+
+    <!-- build:css css/vendor.min.css -->
+    <link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="bower_components/angular-ui-notification/angular-csp.css"/>
+
+    <link rel="stylesheet" href="bower_components/angular-ui-notification/angular-ui-notification.min.css"/>
+    <!-- endbuild -->
+    <!-- build:css css/app.min.css -->
+    <link href="css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/amination.css">
+    <link rel="stylesheet" href="css/abn_tree.css">
+    <!--link rel="stylesheet" href="css/ng-quick-date.css"-->
+    <link rel="stylesheet" href="css/ng-quick-date-default-theme.css">
+    <!-- endbuild -->
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!-- build:js js/modernizr.min.js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+</head>
+<body ng-app="Sigcidev">
+<div class="container">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <img class="navbar-brand" style="cursor:pointer" src="img/logo_banner.png" ng-click="goAccueil()"/>
+        <a class="navbar-brand" href="#!/accueil">SIG-CODE</a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <ul class="nav navbar-nav navbar-collapse collapse" id="menu">
+            <li id="menuList"><a href="#!/facilities"><i class="fa fa-table"></i> Code audit</a></li>
+            <li id="menuNew"><a href="#!/facilities/new"><i class="fa fa-plus-square"></i> Add</a></li>
+            <li id="menuDataElement"><a href="#!/facilities/dataElements"><i class="fa fa-plus-square"></i> Accès Data
+                Element</a></li>
+            <li id="menuTracker"><a href="#!/facilities/tracker"><i class="fa fa-plus-square"></i> Delete Tracker
+                Instance</a></li>
+            <li id="menuFormsComplete"><a href="#!/facilities/facility-formsComplete"><i class="fa fa-plus-square"></i>
+                Etats des formulaires</a></li>
+            <li id="menuCompletude"><a href="#!/facilities/completude"><i class="fa fa-plus-square"></i> Completude /
+                Promptitude</a></li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <div ng-view></div>
+</div>
+
+<!-- build:js js/vendor.min.js -->
+<script src="bower_components/google-maps-utility-library-v3/markerclusterer/src/markerclusterer_compiled.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/angular-ui-notification/angular-ui-notification.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- endbuild -->
+<!-- build:js js/app.min.js -->
+<script src="js/app.js"></script>
+<script src="js/directives/abn_tree_directive.js"></script>
+<script src="js/directives/angularTreeview.js"></script>
+<script src="js/directives/ng-quick-date.js"></script>
+<script src="js/services/DataSetResource.js"></script>
+<script src="js/services/orgUnitResource.js"></script>
+<script src="js/services/dataElementsResource.js"></script>
+<script src="js/services/trackerResource.js"></script>
+<script src="js/services/analyticsRessource.js"></script>
+<script src="js/services/usersResource.js"></script>
+<script src="js/services/categorieCombo.js"></script>
+<script src="js/services/indicateursResource.js"></script>
+<script src="js/services/validationRulesRessource.js"></script>
+<script src="js/controllers/FacilityListCtrl.js"></script>
+<script src="js/controllers/FacilityTrackerCtrl.js"></script>
+<script src="js/controllers/FacilityCtrl.js"></script>
+<script src="js/controllers/FacilityDataElementsCtrl.js"></script>
+<script src="js/controllers/facilityFormsComplete.js"></script>
+<script src="js/controllers/FacilityCompletudeCtrl.js"></script>
+<script src="js/controllers/FacilityOrgunitDatasetCtrl.js"></script>
+<script src="js/controllers/FacilityCompletePeriodCtrl.js"></script>
+<script src="js/controllers/FacilityDataInformation.js"></script>
+<script src="js/controllers/FacilityInteroperability.js"></script>
+<script src="js/controllers/FacitlityValidationRules.js"></script>
+<script src="js/controllers/FacilityUserCredentialsCtrl.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>

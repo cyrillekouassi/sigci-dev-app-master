@@ -1,0 +1,99 @@
+<div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="nav-left-completude">
+                <a href="#" class="btn btn-default btn-block" role="button">ACCUEIL</a>
+                <div class="liste-org-units-completude">
+                    <div ng-if="loadingOrgUnits">
+                        <label>Chargement en cours ... </label>
+                        <br>
+                        <div ng-if="patientez">
+                            <label>{{nbreTelecharger}} / {{nbreTotal}}</label>
+                        </div>
+                        <img src="img/ring-alt.gif" width="50px" height="50px">
+                    </div>
+
+                    <abn-tree tree-data="arbre" tree-control="my_tree" on-select="my_tree_handler(branch)"
+                              expand-level="2"></abn-tree>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-9 bloc-row">
+            <div class="nav-right-formsComplete">
+                <div>
+                    <fieldset style="border: 2px black solid; background-color: #00CC00; width: 650px">
+                        <table>
+                            <tr>
+                                <td class="td-marge"><label for="nomOrgUnit">Unité d'organisation</label></td>
+                                <td><input type="text" id="nomOrgUnit" size="60" readonly
+                                                            placeholder="choisissez l'unité d'organisation" ng-model="facility.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="perioddebut">periode de </label></td>
+                                <td>
+                                    <quick-datepicker style="font-size: 10pt;" id="perioddebut" ng-model='period.debut' disable-timepicker='true' date-filter='datesMaxfin' label-format="MMMM yyyy" date-format='dd-MM-yyyy' placeholder='Date de création'></quick-datepicker>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button ng-disabled="loadingDataSet" class="btn btn-default" ng-click="executer()">Executer</button>
+                                <img ng-show="loadingDataSet" src="img/reload.gif" width="35px" height="35px">
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+                <p></p>
+                <div ng-if="AttenteChargement" style="margin-top: 10%;">
+                    <div class="text-center" id="example-caption-1">Exécution à&hellip; {{bars}}%</div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{bars}}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': bars+'%'}">
+                            <span class="text-center">{{bars}}%</span>
+                        </div>
+                    </div>
+                    <img src="img/ring-alt.gif" style="margin-left: 40%">
+                </div>
+                <div ng-show="chargement">
+                    <div class="text-center" style="font-size: 1.2em;">
+                        <label>{{titre}}</label>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Unité d'organisation</th>
+                            <th class="centrage">Rapport Obtenu</th>
+                            <th class="centrage">Rapport attendu</th>
+                            <th class="centrage">Completude</th>
+                            <th class="centrage">Rapport à temps</th>
+                            <th class="centrage">Promptitude</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="rapport in collectesCompletudes | orderBy: 'name'">
+                            <td>{{rapport.name}}</td>
+                            <td class="centrage">{{rapport.obtenuDataSets}}</td>
+                            <td class="centrage">{{rapport.AttenduDataSets}}</td>
+                            <td class="centrage">{{rapport.completude}}</td>
+                            <td class="centrage">{{rapport.prompt}}</td>
+                            <td class="centrage">{{rapport.promptitude}}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>{{completudeTotal.name}}</th>
+                            <th class="centrage">{{completudeTotal.obtenuDataSets}}</th>
+                            <th class="centrage">{{completudeTotal.AttenduDataSets}}</th>
+                            <th class="centrage">{{completudeTotal.completude}}</th>
+                            <th class="centrage">{{completudeTotal.prompt}}</th>
+                            <th class="centrage">{{completudeTotal.promptitude}}</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

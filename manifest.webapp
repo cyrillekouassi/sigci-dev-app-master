@@ -1,0 +1,29 @@
+{
+      "name": "SIGCI Developpment",
+      "description": "apps developpee pour les besoins du pays",
+      "version": "1.0",
+      "developer": {
+        "name": "measure and dppeis",
+        "email": "cyrillekouassi2002@gmail.com"
+      },
+
+      "installs_allowed_from": [
+        "*"
+      ],
+
+      "launch_path": "index.html",
+
+      "activities": {
+        "dhis": {
+          "href": "*"
+        }
+      },
+
+      "icons": {
+        "128": null,
+        "16": null,
+        "48": "/img/icons/id_card.png"
+      },
+
+      "default_locale": "en"
+}

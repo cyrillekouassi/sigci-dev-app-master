@@ -1,0 +1,119 @@
+<div class="container-fluid bloc-container">
+
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-4 bloc-row">
+            <div class="nav-left-audit">
+                <a href="#!/facilities/new" class="btn btn-default btn-block" role="button">Création d'etablissement</a>
+                <button class="btn btn-default btn-block" ng-click="menuRegion()">{{typeOrgUnit[1].name}}</button>
+                <button class="btn btn-default btn-block" ng-click="menuDistict()">{{typeOrgUnit[2].name}}</button>
+                <button class="btn btn-default btn-block" ng-click="menuEtablissement()">{{typeOrgUnit[3].name}}</button>
+                <button class="btn btn-default btn-block" ng-click="menuCodeDoublon()">CODE EN DOUBLON</button>
+                <button class="btn btn-default btn-block" ng-click="menuSanCode()">SANS CODE</button>
+                <button class="btn btn-default btn-block" ng-click="hierarchie()">CODE PAR HIERARCHIE</button>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-8">
+            <div class="">
+                <div class="bloc-entete-audit">
+                    <fieldset ng-if="affiche == 'dernier'">
+                        <legend><h1>Dernière création ou modification</h1></legend>
+                    </fieldset>
+                    <fieldset ng-if="affiche == 'code'">
+                        <legend><h1>SANS CODE</h1></legend>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" ng-click="sanCode()">TOUT</button>
+                            <button type="button" class="btn btn-primary" ng-click="sanCode(typeOrgUnit[0].level)">{{typeOrgUnit[0].name}}</button>
+                            <button type="button" class="btn btn-primary" ng-click="sanCode(typeOrgUnit[1].level)">{{typeOrgUnit[1].name}}</button>
+                            <button type="button" class="btn btn-primary" ng-click="sanCode(typeOrgUnit[2].level)">{{typeOrgUnit[2].name}}</button>
+                            <button type="button" class="btn btn-primary" ng-click="sanCode(typeOrgUnit[3].level)">{{typeOrgUnit[3].name}}</button>
+                        </div>
+                    </fieldset>
+                    <fieldset ng-if="affiche == 'double'">
+                        <legend><h1>CODE REPETE</h1></legend>
+                    </fieldset>
+                    <fieldset ng-if="affiche == 'orgunit'">
+                        <legend><h1>{{entete}}</h1></legend>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" ng-click="unitOrg('all')">TOUT</button>
+                            <button type="button" class="btn btn-primary" ng-click="unitOrg()">SANS CODE</button>
+                            <button type="button" class="btn btn-primary" ng-click="unitOrg(1)">CODE A 1 CHIFFRE</button>
+                            <button type="button" class="btn btn-primary" ng-click="unitOrg(2)">CODE A 2 CHIFFRE</button>
+                            <button type="button" class="btn btn-primary" ng-click="unitOrg(3)">CODE A 3 CHIFFRE</button>
+                        </div>
+                    </fieldset>
+                    <fieldset ng-if="affiche == 'orghierachie'">
+                        <legend><h1>CODE PAR HIERARCHIE</h1></legend>
+                    </fieldset>
+
+                </div>
+
+                <fieldset  ng-disabled="toutDesactive" ng-if="affiche != 'orghierachie'">
+                    <div>
+                        <input type="button" class="btn btn-primary" ng-click="gestionCode()" ng-disabled="lesChecked.roles.length == 0"
+                               value="{{action1 + ' selectionnés'}}"/>
+                        <input type="button" class="btn btn-danger" ng-click="SupprimerCode()" ng-disabled="lesChecked.roles.length == 0"
+                               value="Supprimer code des selectionnés"/>
+                    </div>
+                    <div>
+                        <table class="table-bordered table-striped table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th class="thCheck">No</th>
+                                <th class="thCheck"><input type="checkbox" disabled ng-click="checking()" ng-checked="chekTiltle"
+                                                           ng-model="value"></th>
+                                <th class="thNiveau">Niveau</th>
+                                <th class="thName">Name</th>
+                                <th class="thCode">code</th>
+                                <th class="thAction">Actions</th>
+                            </tr>
+                            </thead>
+                            <tr ng-repeat="facility in collectionAffiche track by facility.id | orderBy: 'code'">
+                                <td>{{ $index+1 }}</td>
+                                <td><input type="checkbox" ng-if="facility.name" ng-click="monAction(facility,$index)" ng-checked="chekAll">
+                                    <!--input type="checkbox" data-checklist-model="lesChecked.roles"
+                                           data-checklist-value="facility" ng-if="facility.name" ng-click="nonAction(facility,facility.code)"-->
+                                </td>
+                                <td>{{ facility.nomNiveau }}</td>
+                                <td>{{ facility.name }}</td>
+                                <td>{{ facility.code }}</td>
+                                <td>
+                                    <a ng-if="facility.name" ng-class="{'disabled': toutDesactive}" style="font-size: 0.85em;"
+                                       href="#!/facilities/edit/{{ facility.id }}"
+                                       ng-mouseover="envoieFacility(facility)"
+                                       class="btn btn-primary"><i
+                                            class="fa fa-edit"> </i></a>
+                                    <a ng-if="facility.name" ng-class="{'disabled': toutDesactive}" style="font-size: 0.85em;" href=""
+                                       ng-click="removeFacility(facility.id,$index)"
+                                       class="btn btn-danger"><i class="fa fa-trash-o"> </i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </fieldset>
+                <fieldset ng-if="affiche == 'orghierachie'">
+                    <div>
+                        <table class="table-bordered table-striped table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th class="thCheck">No</th>
+                                <th class="thNiveau" ng-repeat="nivo in niveauOrgUnit track by $index"><th>{{nivo.name}}</th><th>code</th></th>
+                            </tr>
+                            </thead>
+                            <tr ng-repeat="org in orgunitsList track by $index">
+                                <td>{{ org[1].name }}</td>
+                                <td>{{ org[1].code }}</td>
+                                <td>{{ org[2].name }}</td>
+                                <td>{{ org[2].code }}</td>
+                                <td>{{ org[3].name }}</td>
+                                <td>{{ org[3].code }}</td>
+                                <td>{{ org[4].name }}</td>
+                                <td>{{ org[4].code }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

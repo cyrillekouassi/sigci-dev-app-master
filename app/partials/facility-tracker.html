@@ -1,0 +1,180 @@
+<div class="container-fluid bloc-container">
+    <div class="row">
+        <div class="col-md-3 bloc-row">
+            <div class="nav-left-tracker">
+                <a href="#" class="btn btn-default btn-block" role="button">ACCUEIL</a>
+                <a href="#!/facilities" class="btn btn-default btn-block" role="button">Audit des codes</a>
+                <a href="#!/facilities/new" class="btn btn-default btn-block" role="button">Création d'etablissement</a>
+                <a href="#!/facilities/dataElements" class="btn btn-default btn-block" role="button">Accès éléments de
+                    données</a>
+                <button class="btn btn-default btn-block" ng-click="alerteSuspect()">{{typeCas}}</button>
+                <div class="liste-org-units-tracker">
+                    <div ng-if="loadingOrgUnits">
+                        <label>Chargement en cours ... </label>
+                        <br>
+                        <div ng-if="patientez">
+                            <label>{{nbreTelecharger}} / {{nbreTotal}}</label>
+                        </div>
+                        <img src="img/ring-alt.gif" width="50px" height="50px">
+                    </div>
+                    <abn-tree tree-data="arbre" tree-control="my_tree" on-select="my_tree_handler(branch)"
+                              expand-level="2"></abn-tree>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-9 bloc-row">
+            <div class="nav-right-tracker">
+
+                <fieldset style="border: 2px black solid; background-color: #00CC00; width: 500px">
+                    <table>
+                        <tr>
+                            <td><label for="nomOrgUnit">Unité d'organisation</label></td>
+                            <td><input type="text" id="nomOrgUnit" size="35" readonly
+                                       placeholder="choisissez l'unité d'organisation" ng-model="facility.name"/>
+                            </td>
+                        </tr>
+                        <tr ng-show="alerSusp=='NO'">
+                            <td><label for="nomProgram">Programme</label></td>
+                            <td><select id="nomProgram" ng-model="leChoix" ng-change="executerProgram()" style="width: 275px"
+                                        ng-options="prog.id as prog.name for prog in lesPrograms">
+                            </select></td>
+                        </tr>
+                        <tr ng-show="alerSusp=='YES'">
+                            <td><label for="progr">Programme 1</label></td>
+                            <td><select id="progr" ng-model="leChoixPremier" ng-change="chargeProgram2()" style="width: 275px"
+                                        ng-options="prog.id as prog.name for prog in lesPrograms1">
+                            </select></td>
+                        </tr>
+                        <tr ng-show="alerSusp=='YES'">
+                            <td><label for="prog">Programme 2</label></td>
+                            <td><select id="prog" ng-model="leChoixSecond" ng-change="chargeProgram1()" style="width: 275px"
+                                        ng-options="prog.id as prog.name for prog in lesPrograms2">
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td><label for="children">Type d'accès</label></td>
+                            <td><select id="children" ng-model="acces" ng-change="executerProgram()" style="width: 275px">
+                                <option value="SELECTED">Cette unité d'organisation</option>
+                                <option value="CHILDREN">Ces unités d'organisation immediatement descendante
+                                </option>
+                                <option value="DESCENDANTS">Toute la hiérarchie descendante</option>
+                            </select></td>
+                        </tr>
+                        <tr ng-if="alerSusp=='YES'">
+                            <td></td>
+                            <td>
+                                <button class="btn btn-default" ng-click="go()">Executer</button>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <div ng-show="loadingTable">
+                    <img src="img/ring-alt.gif" width="50px" height="50px">
+                </div>
+                <div ng-show="afficheNbreNotif">
+                    <div class="pull-right">
+                        <button class="btn btn-default " ng-disabled="!doublon" ng-click="voirTout()">VOIR TOUT
+                        </button>
+                        <button class="btn btn-default" ng-disabled="doublon" ng-click="rechercheDoublon()">
+                            Recherche
+                            doublon
+                        </button>
+                        <button class="btn btn-default" ng-disabled="incomplet" ng-click="rechercheIncomplet()">
+                            Incomplet
+                        </button>
+                        <button class="btn btn-default" ng-click="voirRecaputulatif()">
+                            Recapitulatif
+                        </button>
+                    </div>
+                    <label>{{textInformation}} </label>
+
+                    <div ng-show="!afficheRecaputulatif">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Unité d'organisation</th>
+                                <th ng-repeat="entete in lesAttributs">{{entete.name}}</th>
+                                <th>Date de notification de l'évènement</th>
+                                <th>Date d'incidence</th>
+                                <th style="width: 30px;">Actions</th>
+                            </tr>
+                            </thead>
+                            <tr ng-repeat="instance in afficheInstance | orderBy: 'enrollmentDate'">
+                                <td>{{indiceIndex+$index +1}}</td>
+                                <td>{{instance.orgUnitName}}</td>
+                                <td ng-repeat="entete in lesAttributs">{{ instance[entete.id] }}</td>
+                                <td>{{ instance.enrollmentDate | date: "dd-MM-yyyy à HH:mm:ss" }}</td>
+                                <td>{{ instance.incidentDate | date: "dd-MM-yyyy à HH:mm:ss" }}</td>
+                                <td style="width: 30px;">
+                                    <a ng-class="{'disabled': toutDesactive}" style="font-size: 0.85em"
+                                       ng-click="removeInstance(instance.trackedEntityInstance, $index)"
+                                       class="btn btn-danger"><i class="fa fa-trash-o"> </i></a>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="pied-page">
+                            <ul class="pagination pagination-block" ng-repeat="page in nbrePage">
+                                <li ng-class="{'active': pageAffiche==$index}"><a
+                                        ng-click="changerPage(page.page,$index)" href="">{{page.page}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-show="afficheRecaputulatif">
+                        <p class="centrage"><label>TABLEAU RECAPITULATIF</label></p>
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Evenement</th>
+                                <th ng-repeat="entete in options">{{entete.name}}</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>{{optionSetsName[0].name}}</td>
+                                <td ng-repeat="instance in optionsNbre" class="centrage"><span
+                                        ng-repeat="entete in options">{{ instance[entete.id] }}</span></td>
+                                <td class="centrage">{{nbreTotalCas}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div ng-if="afficheSimilitude">
+                    {{info}}
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Unité d'organisation</th>
+                            <th>Village / Quartier du cas</th>
+                            <th>Date de constat du cas</th>
+                            <th>Nom Prenoms</th>
+                            <th>Age</th>
+                            <th>Sexe</th>
+                            <th>CAS</th>
+                            <th>TYPE DE CAS</th>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="instance in collectSimilutude4">
+                            <td>{{$index +1}}</td>
+                            <td>{{instance.orgUnit}}</td>
+                            <td>{{ instance.vq }}</td>
+                            <td>{{ instance.ddc}}</td>
+                            <td>{{ instance.s}}</td>
+                            <td>{{ instance.mal}}</td>
+                            <td>{{ instance.cas}}</td>
+                        </tr>
+                    </table>
+                    <div class="pied-page">
+                        <ul class="pagination pagination-block" ng-repeat="page in nbrePage">
+                            <li ng-class="{'active': pageAffiche==$index}"><a ng-click="changerPage(page.page,$index)"
+                                                                              href="">{{page.page}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

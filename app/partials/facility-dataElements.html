@@ -1,0 +1,94 @@
+<div class="container">
+
+    <fieldset>
+        <fieldset class="pull-left">
+            <legend>trier par</legend>
+            <div >
+                <label for="ord">ordonner par</label>
+                <select name="" id="ord" ng-model="ordre" ng-change="desactiveCocheOrder()">
+                    <option value="">Aucun</option>
+                    <option value="object.name">Nom de l'éléments de données</option>
+                    <option value="object.publicAccess">Acces public</option>
+                    <option value="object.user.name">Nom du Propriétaire</option>
+                </select>
+            </div>
+            <div>
+                <label for="aff">Aficher les publicAccess</label>
+                <select name="" id="aff" ng-model="typesAccess" ng-change="desactiveCocheAccess()">
+                    <option value="">Aucun</option>
+                    <option value="--------">--------</option>
+                    <option value="r-------">r-------</option>
+                    <option value="rw------">rw------</option>
+
+                </select>
+            </div>
+        </fieldset>
+        <fieldset class="pull-right">
+            <legend>Recherche</legend>
+            <div>
+                <label>Entrer ID</label>
+                <input type="text" ng-model="Search" placeholder="Entrer le Id du dataElement"/>
+                <input type="button" ng-click="searching()" value="Search">
+                <input type="button" ng-click="voirListe()" value="voir la liste">
+            </div>
+        </fieldset>
+        <div>
+
+        </div>
+
+        <div class="pull-right">
+            <Button ng-click="allAccess()" ng-disabled="toutDesactive">Tous Acces au éléments coché</Button>
+            <Button ng-click="noAccess()" ng-disabled="toutDesactive">limité acces au éléments coché</Button>
+        </div>
+        <p/>
+        <div>
+            <label>{{lesId.length}} Elements de données</label>
+        </div>
+        <legend>Les éléments de donnée sans acces public</legend>
+        <!--{{AllCheckDataElements.roles}}/ {{AllCheckDataElements.roles.length}}-->
+        <table class="table table-bordered table-striped table-hover" ng-show="AfficheTbDataElement">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="checkboxDataElement" ng-disabled="toutDesactiveAllCheck" ng-click="checkAllDataElements()" ng-model="EditAllCheckDataElements.value"></th>
+                <th>Nom de l'éléments de données</th>
+                <th>Acces public</th>
+                <th>Nom du Propriétaire</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="facility in tbDataElement | filter: typesAccess | orderBy:ordre">
+                <td><input type="checkbox" name="tousCheckbox" ng-disabled="toutDesactive" checklist-model="AllCheckDataElements.roles" checklist-value="facility" ></td>
+                <td>{{facility.object.name}}</td>
+                <td>{{facility.object.publicAccess}}</td>
+                <td>{{facility.object.user.name}}</td>
+                <td>
+                    <a style="font-size: 0.85em;" href="" class="btn btn-primary" ng-click="accesRW( facility)" ng-class="{'disabled': toutDesactive}"><i class="fa fa-edit"> </i></a>
+                    <a ng-class="{'disabled': toutDesactive}" style="font-size: 0.85em;" href="" ng-click="removeAccess( facility)"
+                       class="btn btn-danger" ><i class="fa fa-trash-o"> </i></a>
+                </td>
+            </tr>
+        </table>
+
+        <table class="table table-bordered table-striped table-hover" ng-if="AffichetElementChercher">
+            <thead>
+            <tr>
+                <th>Nom de l'éléments de données</th>
+                <th>Acces public</th>
+                <th>Nom du Propriétaire</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="facilityOn in elementChercher">
+                <td>{{facilityOn.object.name}}</td>
+                <td>{{facilityOn.object.publicAccess}}</td>
+                <td>{{facilityOn.object.user.name}}</td>
+                <td>
+                    <a style="font-size: 0.85em;" href="" class="btn btn-primary" ng-click="accesRW( facilityOn)" ng-class="{'disabled': OnDesactive}"><i class="fa fa-edit"> </i></a>
+                    <a ng-class="{'disabled': OnDesactive}" style="font-size: 0.85em;" href="" ng-click="removeAccess( facilityOn)"
+                       class="btn btn-danger" ><i class="fa fa-trash-o"> </i></a>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+</div>

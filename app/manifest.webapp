@@ -1,0 +1,29 @@
+{
+   "name" : "TEST CODE",
+   "description" : "GESTION DES CODES",
+   "version" : "1.0",
+   "developer" : {
+      "name" : "Morten Olav Hansen",
+      "email" : "mortenoh@gmail.com"
+   },
+
+   "installs_allowed_from" : [
+      "*"
+   ],
+
+   "launch_path" : "index.html",
+
+   "activities" : {
+      "dhis" : {
+         "href" : "*"
+      }
+   },
+
+   "icons" : {
+      "128" : null,
+      "16" : null,
+      "48" : "/img/icons/id_card.png"
+   },
+
+   "default_locale" : "en"
+}

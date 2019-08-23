@@ -1,0 +1,65 @@
+<div class="finfo">
+    <div style="margin: 10px;">
+        <table>
+            <tr>
+                <td>Data Sets </td>
+                <td><select ng-model="dataSet" ng-change="chargeDataSet(dataSet)"
+                            style="width: 350px"
+                            ng-options="datasat.id as datasat.name for datasat in collecteDataSets | orderBy: 'name'">
+                </select></td>
+                <td><button ng-click="afficheAllRules()">ALL VALIDATIONS RULES</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-if="!attente" class="decal">
+        <div>
+            <table class="tbregle" ng-if="showAll">
+                <tr>
+                    <th>Nom de l'ensemble de donnée</th>
+                    <th>nom de la regle de validation</th>
+                    <th>regle</th>
+                </tr>
+                <tr ng-repeat="set in afficheResultat track by $index">
+                    <td ng-if="set.setName" rowspan="{{set.fusion}}"><strong>Id:</strong> {{set.setId}} <br/> <strong>Nom :</strong> {{set.setName}}</td>
+                    <td ng-if="set.rulesName" rowspan="3"><strong>Id:</strong> {{set.rulesId}} <br/> <strong>Nom :</strong> {{set.rulesName}}</td>
+                    <td ng-if="set.rulesGauche"><strong>Gauche :</strong> {{set.rulesGauche.expression}}<br/> {{set.rulesGauche.value}}</td>
+                    <td ng-if="set.operator">Opérateur : <strong>{{set.operator}}</strong></td>
+                    <td ng-if="set.rulesDroit"><strong>Droit :</strong> {{set.rulesDroit.expression}}<br/> {{set.rulesDroit.value}}</td>
+
+                </tr>
+            </table>
+        </div>
+        <div ng-if="!showAll">
+            <h4>{{datasetSelected}}</h4>
+            <div style="right: 20px;">
+                <button class="btn btn-danger" ng-click="deleteAllRules(dataSet)"> Supprimer toutes les regles du dataSet</button>
+            </div>
+            <div>
+                <table class="tbregle">
+                    <tr>
+                        <th>nom de la regle de validation</th>
+                        <th>regle</th>
+                        <th>Data set en commun</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr ng-repeat="rule in rulesAffiche track by $index">
+                        <td ng-if="rule.ruleId" rowspan="3"><strong>Id:</strong> {{rule.ruleId}} <br><strong>Nom :</strong> {{rule.ruleName}}</td>
+                        <td ng-if="rule.rulesGauche"><strong>Gauche :</strong> {{rule.rulesGauche.expression}}<br/> {{rule.rulesGauche.value}}</td>
+                        <td ng-if="rule.operator">Opérateur : <strong>{{rule.operator}}</strong></td>
+                        <td ng-if="rule.rulesDroit"><strong>Droit :</strong> {{rule.rulesDroit.expression}}<br/> {{rule.rulesDroit.value}}</td>
+                        <td rowspan="3"><span ng-repeat="double in rule.doublon track by $index"><strong>{{$index+1}} :</strong> {{double.name}} <br/></span></td>
+                        <td ng-if="rule.ruleId" rowspan="3">
+                            <button ng-click="deleteRule(rule.ruleId)" class="btn btn-danger">delete</button></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <div>
+        <img src="img/reload.gif" alt="" ng-if="load">
+        <h3 ng-if="attente">{{info}}</h3>
+    </div>
+</div>

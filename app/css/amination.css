@@ -1,0 +1,31 @@
+.attente {
+
+}
+.loader {
+    position : fixed;
+    z-index: 9999;
+    background: url('../img/ring-alt.gif') 50% 50% no-repeat;
+    background-size: 100px 100px;
+    height : 100%;
+    width : 100%;
+    cursor : wait;
+}
+.loader-simple{
+    position : fixed;
+    z-index: 9999;
+    background : url('../img/ajax-loader.gif') fixed no-repeat;
+    /*background-size: 50px 50px;*/
+    height : 100%;
+    width : 100%;
+    cursor : wait;
+    /*background : url("../img/tris.svg") no-repeat left;*/
+    /*top : 50%;
+    left : 50%;*/
+    /*height : 100%;
+    width : 100%;*/
+}
+.kiwi {
+
+    /*background : url('../img/ajax-loader.gif') 50% 50% no-repeat;
+    background: url(../img/default.svg) no-repeat left 50px; height: 250px;*/
+}

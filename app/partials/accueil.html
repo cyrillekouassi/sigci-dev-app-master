@@ -1,0 +1,91 @@
+<div style="background-color: #E7E7E7;" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4 col-md-3">
+            <div class="bloc-left">
+                <p><a href="#!/facilities">Audit des codes</a></p>
+                <p><a href="#!/facilities/new">Création d'etablissement</a></p>
+                <p><a href="#!/facilities/dataElements">Accès éléments de données</a></p>
+                <p><a href="#!/facilities/tracker">Suppression d'instance Tracker</a></p>
+                <p><a href="#!/facilities/facility-formsComplete">Etats des formulaires</a></p>
+                <p><a href="#!/facilities/completude">Completude / Promptitude</a></p>
+                <p><a href="#!/facilities/OrgunitDataset">Ensemble de donnée / Unité d'organisation</a></p>
+                <p><a href="#!/facilities/analytics">completude-analytics</a></p>
+                <p><a href="#!/facilities/dataInformation">Data Information</a></p>
+                <p><a href="#!/facilities/interoperability">Interoperability in DHIS2</a></p>
+                <p><a href="#!/facilities/validationRules">Règles de validations</a></p>
+                <!--<p><a href="#!/facilities/UserCredentials">Me</a></p>-->
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-9  grand-bloc">
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <div class="bloc-info">
+                        <p class="bloc-entete"><a href="#!/facilities">Audit des codes</a></p>
+                        <p class="bloc-info-text"> Relève les codes unités par unité d'organisation. il y a des listes par:
+                        <ul>
+                            <li>les unités d'organisation sans code</li>
+                            <li>les unités d'organisation ayant le meme code</li>
+                            <li>les unité d'organisation ayant des codes non conformes</li>
+                            <li>les unités d'organisation ayant des codes non harmonisé</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="bloc-info">
+                        <p class="bloc-entete"><a href="#!/facilities/new">Création d'etablissement</a></p>
+                        <p class="bloc-info-text">Creation d'une unité d'organisation de type etablissement sanitaire. Le code de l'établissement est généré automatique.
+                            c'est le code disponible qui est attibué par defaut à l'établissement. Mais un autre code peut être choisi dans la liste
+                            disponible
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="bloc-info">
+                        <p class="bloc-entete"><a href="#!/facilities/dataElements">Accès éléments de données</a></p>
+                        <p class="bloc-info-text">Droit d'acces au éléments de données. gérer les droits acces à certains éléments pour les utilisateurs autre que les
+                            superUsers. La particularité c'est d'automatiser l'attribution des droits. l'attribution peut se faire par groupe d'utilisateur
+                            bien définis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <div class="bloc-info">
+                        <p class="bloc-entete"><a href="#!/facilities/tracker">Suppression d'instance Tracker</a></p>
+                        <p class="bloc-info-text">La possibilité de supprimer des instances de tracker.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="bloc-info">
+                        <p class="bloc-entete"><a href="#!/facilities/facility-formsComplete">Etats des formulaires</a></p>
+                        <p class="bloc-info-text">En selectionnant une unité d'organisation et une période, la liste des formulaires assigné à l'unité d'organisation s'affiche.
+                        Les formulaire terminé sont marqué en vert et les autres par une croix rouge. Les formulaire prise en compte sont ceux dont les périodes de rapportage sont:
+                        <ul>
+                            <li>Mensuelle</li>
+                            <li>Trimestriel</li>
+                            <li>semestrielle</li>
+                            <li>Annuelle (de janvier à decembre)</li>
+                        </ul>
+                        <br>
+                        NB: Si la période choisi ne respect pas la périodes de rapportage d'un formulaire ou si notre module ne prend pas en compte le période de rapportage de ce formulaire,
+                         un trait bleu indque que ce cas n'est pas prise en compte.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="bloc-info">
+                        <p class="bloc-entete"><a href="#!/facilities/completude"> Completude Promtitude</a></p>
+                        <p class="bloc-info-text">les rapports mensuelle en terme de completude et de promptitude sont affiché pour une unité d'organisation (nation, région sanitaire, district
+                            sanitaire, etablissement sanitaire) sélectionné.
+                            <br>
+                            NB: Ne sont pas pris en compte les formulaires dont la période de rapportage n'est pas mensuelle
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,373 @@
+body {
+
+    padding-top : 50px;
+    background-color: white;
+    height:100%;
+    margin:0;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display : none !important;
+}
+
+.google-map {
+    -webkit-box-sizing : content-box;
+    -moz-box-sizing    : content-box;
+    box-sizing         : content-box;
+}
+
+#infoWindow {
+    width: 140px;
+    height: 100px;
+}
+.thCheck{
+    width: 3%;
+}
+.thNiveau{
+    width: 25%;
+}
+.thName{
+    width: 55%;
+}
+.thCode{
+    width: 7%;
+}
+.thAction{
+    width: 10%;
+}
+.thCheckEts{
+    width: 3%;
+}
+.thNameEts{
+    width: 77%;
+}
+.thCodeEts{
+    width: 10%;
+}
+.thActionEts{
+    width: 10%;
+    /*border: 3px black solid;
+    margin: 10px;*/
+}
+.grand-bloc{
+    padding-left: 30px;
+}
+.bloc-left{
+    border-right: 1px black solid;
+    padding: 30px 0 0 0;
+    margin: 0 0 0 0px;
+    height:100vh;
+    width: 100%;
+    background-color: white;
+}
+.bloc-left p{
+    font-family: "Times New Roman",Verdana,Arial,"Courier New",Serif;
+    font-size: 1.2em;
+    color: white;
+    padding: 0 0 0 30px;
+}
+.bloc-info{
+    margin: 30px 0 0 0;
+    min-height: 300px;
+    width: 250px;
+    background-color: white;
+}
+.bloc-container{
+    margin:0;
+    padding: 0 30px 0 0;
+    background: white;
+    min-width: 100%;
+}
+.bloc-row {
+    margin:0;
+    padding: 0;
+}
+.bloc-info-text{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    font-size: 1.0em;
+    text-align: left;
+    font-family: Arial,Verdana,"Times New Roman","Courier New",Serif;
+}
+.bloc-entete{
+    /*border-bottom: 2px black solid;*/
+    background-color: #00b3ee;
+    height: auto;
+    width: auto;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    overflow: auto;
+}
+.liste-org-units{
+    width:100%;
+    background: white;
+    border-radius:5px;
+    height: 60%;
+    margin-top: 30px;
+    overflow:auto;
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+.liste-org-units-tracker{
+    width:100%;
+    background: white;
+    border-radius:5px;
+    height: 58%;
+    margin: 30px 0 10px 0;
+    overflow:auto;
+    white-space: nowrap;
+    font-size: 0.8em;
+}
+.nav-right-tracker{
+    padding-top : 20px;
+    min-height: 100%;
+}
+.load{
+    height : 100%;
+    width : 100%;
+    cursor : wait;
+}
+.nav-left-tracker{
+    background: #00b3ee;
+    border:1px solid lightgray;
+    height: 100%;
+    width: 300px;
+    padding: 10px 20px 20px 20px;
+    margin: 0px;
+    position:fixed;
+    z-index:2;
+}
+.nav-left-completude{
+    background: #00b3ee;
+    border:1px solid lightgray;
+    height: 100%;
+    width: 300px;
+    padding: 10px 20px 20px 20px;
+    margin: 0px;
+    position:fixed;
+    z-index:2;
+}
+.nav-left-audit{
+    background: #00b3ee;
+    border:1px solid lightgray;
+    height: 100%;
+    width: 300px;
+    padding: 20px 0 0 0;
+    margin: 0px;
+    position:fixed;
+    z-index:2;
+}
+.pagination-block{
+    position: relative;
+    margin-left: 50%;
+    margin-top: 10px;
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.bloc-entete-audit{
+    margin: 20px 0 20px 0;
+    min-height: 50px;
+    min-width: 100%;
+    background: #8AB9D2;
+}
+.bloc-entete-corps{
+    min-height: 100vh;
+    min-width: 100%;
+    background: white;
+}
+.doublon-block{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    width: 100%;
+
+}
+.nav-top-right-tracker{
+    float:left;
+    left: 330px;
+    display:inline-block;
+    vertical-align:middle;
+}
+.pied-page{
+    height: 60px;
+    width: 100%;
+    background: #EBF0F6;
+    margin-bottom: 10px;
+}
+.nav-right-formsComplete{
+    background-color: white;
+    margin-left: 20px;
+    padding : 20px;
+    min-height: 100vh;
+    min-width: 100%;
+}
+.gi-2x{
+    font-size: 2em;
+}
+.gi-3x{
+    font-size: 3em;
+}
+.gi-4x{
+    font-size: 4em;
+}
+.vert{
+    color: green;
+}
+.bleue{
+    color: blue;
+}
+.rouge{
+    color: red;
+}
+.td-marge{
+    margin-right: 20px;
+}
+.liste-org-units-completude{
+    width:100%;
+    background: white;
+    border-radius:5px;
+    height: 58%;
+    margin: 30px 0 10px 0;
+    overflow:auto;
+    white-space: nowrap;
+    font-size: 0.8em;
+}
+.centrage{
+    vertical-align: middle;
+    text-align: center;
+}
+.cellule-size{
+    vertical-align: middle;
+    text-align: center;
+    max-width: 150px;
+    min-width: 150px;
+}
+.cellule-size-name{
+    max-width: 200px;
+    min-width: 200px;
+}
+.nav-top-orgunit-dataset{
+    border:1px solid lightgray;
+    height: 3500px;
+    width: 400px;
+    margin-left: 30%;
+    position:relative;
+}
+.liste-org-units-orgunit-dataset{
+    width:375px;
+    height: 350px;
+    margin-top: 15px;
+    margin-left: 10%;
+    margin-bottom: 30px;
+    border:1px solid black;
+    background: white;
+    border-radius:5px;
+    overflow:auto;
+    white-space: nowrap;
+    font-size: 0.8em;
+}
+
+.text-orange{
+   color: gold;
+}
+.entete-tableau-orgunitdataset{
+    height: 30px;
+    font-size: 1.0em;
+    background-color: blue;
+}
+.contourTableau{
+    height: 350px;
+    border: 2px double orange;
+    margin: 0 0 30px 0;
+}
+.tableau{
+    height: 320px;
+    white-space: nowrap;
+    overflow:auto;
+}
+.td-table-numero{
+    min-width: 30px;
+    text-align: center;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+.td-table{
+    border-bottom: 1px solid black;
+    padding-left: 10px;
+}
+.select-line{
+    border: 2px solid orange;
+}
+.fieldset{
+    border: 1px #D0EBD0 solid;
+    padding: 5px;
+    background-color: #D0EBD0;
+    width: 650px;
+    font-size: 9pt;
+}
+.labelSelect{
+    display: block;
+    font-weight:normal;
+    margin: 0px;
+}
+.liste-org-units-formComplete{
+    width:100%;
+    background: white;
+    border-radius:5px;
+    height: 400px;
+    margin: 30px 0 10px 0;
+    overflow:auto;
+    white-space: nowrap;
+    font-size: 0.8em;
+}
+.nav-left-formComplete{
+    background: #00b3ee;
+    border:1px solid lightgray;
+    height: 100%;
+    width: 300px;
+    padding: 0px;
+    margin: 0px;
+    position:fixed;
+    z-index:2;
+}
+.decalage{
+    margin-left: 300px;
+}
+.nav-left-formComplete-cadre{
+    padding: 10px 20px 20px 20px;
+}
+.analytic-table-green{
+    background-color: #92D050;
+}
+.analytic-table-yellow{
+    background-color: #FFFF00;
+}
+.analytic-table-bleu{
+    background-color: #CBDDEB;
+}
+.finfo table{
+    margin:auto;
+    margin-bottom: 20px;
+
+}
+
+.finfo .structure tr th,.finfo .structure tr td{
+    border: solid 1px black;
+    text-align: center;
+}
+
+.structure{
+    width: 800px;
+}
+.tbregle{
+    margin: 15px;
+}
+.tbregle .tbregle tr, .tbregle tr th, .tbregle tr td{
+    border: solid 1px black;
+    text-align: center;
+}
+.decal{
+    margin: 15px;
+}

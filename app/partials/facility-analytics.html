@@ -1,0 +1,160 @@
+<!--div>
+    <div class="row">
+        <div-- class="col-md-3">
+            <div class="nav-left-completude">
+                <a href="#" class="btn btn-default btn-block" role="button">ACCUEIL</a>
+                <div class="liste-org-units-completude">
+                    <div ng-if="loadingOrgUnits">
+                        <label>Chargement en cours ... </label>
+                        <br>
+                        <div ng-if="patientez">
+                            <label>{{nbreTelecharger}} / {{nbreTotal}}</label>
+                        </div>
+                        <img src="img/ring-alt.gif" width="50px" height="50px">
+                    </div>
+
+                    <abn-tree tree-data="arbre" tree-control="my_tree" on-select="my_tree_handler(branch)"
+                              expand-level="2"></abn-tree>
+                </div>
+
+            </div>
+        </div-->
+        <!--div class="col-md-9 bloc-row"-->
+            <div class="nav-right-formsComplete">
+                <div>
+                    <fieldset style="border: 2px black solid; background-color: #00CC00; width: 650px">
+                        <table>
+                            <tr>
+                                <td class="td-marge"><label for="levelOrgUnit">OrgUnits level</label></td>
+                                <td><select id="levelOrgUnit" ng-model="level"
+                                    ng-options="notreLevel.level as notreLevel.name for notreLevel in niveauOrgUnit | orderBy: 'level'">
+                                </select></td>
+                            </tr>
+                            <!--tr>
+                                <td class="td-marge"><label for="nomOrgUnit">Unité d'organisation</label></td>
+                                <td><input type="text" id="nomOrgUnit" size="60" readonly
+                                           placeholder="choisissez l'unité d'organisation" ng-model="facility.name"/>
+                                </td>
+                            </tr-->
+                            <tr>
+                                <td><label for="nomProgram">Ensemble de donnée</label></td>
+                                <td><select id="nomProgram" ng-model="dataSetID"
+                                            style="width: 350px"
+                                    ng-options="prog.id as prog.name for prog in lesDataSets | orderBy: 'name'">
+                                    <!--option-- ng-repeat="prog in lesDataSets">{{prog.name}}</option-->
+                                </select><img ng-show="loadingDataSet" src="img/reload.gif" width="20px" height="20px">
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><label for="nomTypePeriod">Type periode</label></td>
+                                <td><select id="nomTypePeriod" ng-model="typePeriode"
+                                            ng-change="choisirPeriode(typePeriode)">
+                                    <option ng-repeat="periode in collectePeriodeType">{{periode}}</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td><label for="dateDebut">periode debut</label></td>
+                                <td><select id="dateDebut" ng-model="periodDebut"
+                                            ng-options="prog.code as prog.name for prog in collectePeriodeDebut">
+                                    <!--option-- ng-repeat="prog in lesDataSets">{{prog.name}}</option-->
+                                </select><button ng-click="anneePrecedenteDebut()">Année précédente</button><button ng-click="anneeSuivanteDebut()">Année suivante</button></td>
+                            </tr>
+                            <tr>
+                                <td><label for="dateFin">periode Fin</label></td>
+                                <td><select id="dateFin" ng-model="periodFin"
+                                            ng-options="prog.code as prog.name for prog in collectePeriodefin">
+                                    <!--option-- ng-repeat="prog in lesDataSets">{{prog.name}}</option-->
+                                </select><button ng-click="anneePrecedentefin()">Année précédente</button><button ng-click="anneeSuivantefin()">Année suivante</button></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button ng-disabled="loadingDataSet" class="btn btn-default" ng-click="executer()">Executer</button>
+                                    <img ng-show="loadingDataSet" src="img/reload.gif" width="35px" height="35px">
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+                <p></p>
+                <div ng-if="AttenteChargement" style="margin-top: 10%;">
+                    <div class="text-center" id="example-caption-1">Exécution à&hellip; {{labars}}/</div>
+                    <table class="table">
+                        <!--tr>
+                            <td>
+                                <label>Analyse</label>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{barsAnalyse/nbreNivo}}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': bars+'%'}">
+                                        <span class="text-center">{{barsAnalyse/nbreNivo}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <label>{{barsAnalyse}} / {{nbreNivo}}</label>
+                                <img src="img/ring-alt.gif" style="margin-left: 40%" width="20px" height="20px">
+                            </td>
+                        </tr-->
+                        <tr>
+                            <td>
+                                <label>Rapport</label>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{progRapport}}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': bars+'%'}">
+                                        <span class="text-center">{{progRapport}}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <label>{{barsRapport}} / {{nbreNivo}}</label>
+                                <img src="img/ring-alt.gif" style="margin-left: 40%" width="20px" height="20px">
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </div>
+                <fieldset style="border: 1px grey solid" ng-if="charger">
+                    <button id="copy" type="button">Copie<span aria-hidden="true">Copier</span></button>
+                    <div class="text-center" style="font-size: 1.2em;">
+                        <label></label>
+                        <p></p>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover" id="to-copy">
+                        <colgroup>
+                            <col span="2" />
+                            <col ng-repeat="color in lesIntervals.color track by $index" class="{{color}}" span="5" />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th colspan="{{longTitre}}" class="centrage">Rapport du formulaire: {{leDataSet.name}} - {{titres}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="2"><label>Unité d'organisation</label></td>
+                            <td ng-repeat="periodeName in lesIntervals.name track by $index" colspan="5" class="centrage"><label>{{periodeName}}</label></td>
+                        </tr>
+                        <tr>
+                            <td class="centrage"><label>Nom</label></td>
+                            <td class="centrage"><label>Level</label></td>
+                            <td ng-repeat="contenu in lesIntervals.contenuInterval track by $index" class="centrage"><label>{{contenu}}</label></td>
+                        </tr>
+                        <tr ng-repeat="collecte in collecteResultat | orderBy: 'name'">
+                            <td>{{collecte.name}} <!-- / {{collecte.id}}--></td>
+                            <td>{{collecte.level}}</td>
+                            <td ng-repeat="suite in collecte.suiteResultat track by $index" class="centrage">{{suite}}
+                            </td>
+                        </tr>
+                        </tbody>
+
+
+                    </table>
+                </fieldset>
+            </div>
+        <!--/div>
+
+    </div>
+</div-->

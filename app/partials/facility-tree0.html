@@ -1,0 +1,27 @@
+<div class="container">
+
+<div class="row" style="padding-top: 5px; padding-bottom: 10px; padding-right: 14px;">
+  <div class="btn-group pull-right">
+    <a ng-show="parent" class="btn btn-default" href="#!/facilities/new?parent={{parent}}"><i class="fa fa-plus-square"></i> Add</a>
+    <a ng-show="!parent" class="btn btn-default" href="#!/facilities/new"><i class="fa fa-plus-square"></i> Add</a>
+  </div>
+</div>
+
+<table class="table table-bordered table-striped table-hover">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tr ng-repeat="facility in facilities.facilities">
+    <td ng-show="!isTopLevel"><a ng-href="#!/facilities/tree/{{ facility.uuid }}">{{ facility.name }}</a></td>
+    <td ng-show="isTopLevel">{{ facility.name }}</td>
+    <td style="width: 100px;">
+      <a style="font-size: 0.85em;" href="#!/facilities/edit/{{ facility.uuid }}" class="btn btn-primary"><i class="fa fa-edit"> </i></a>
+      <a style="font-size: 0.85em;" href="" ng-click="removeFacility( facility.uuid )" class="btn btn-danger"><i class="fa fa-trash-o"> </i></a>
+    </td>
+  </tr>
+</table>
+
+</div>

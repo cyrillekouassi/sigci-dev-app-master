@@ -1,0 +1,128 @@
+<div class="container-fluid" style="padding: 10px 0 10px 0;">
+
+
+<div class="row" style="padding: 0; margin: 0;">
+    <div class="col-lg-3 col-md-3 col-sm-4">
+        <div class="nav-left-tracker">
+            <a href="#" class="btn btn-default btn-block" role="button">ACCUEIL</a>
+            <a href="#!/facilities" class="btn btn-default btn-block" role="button">Audit des codes</a>
+            <a href="#!/facilities/new" class="btn btn-default btn-block" role="button">Création d'etablissement</a>
+            <a href="#!/facilities/dataElements" class="btn btn-default btn-block" role="button">Accès éléments de données</a>
+            <div class="liste-org-units">
+                <div ng-if="loadingOrgUnits">
+                    <label>Chargement en cours ... </label>
+                    <br>
+                    <div ng-if="patientez">
+                        <label>{{nbreTelecharger}} / {{nbreTotal}}</label>
+                    </div>
+                    <img src="img/ring-alt.gif" width="50px" height="50px">
+                </div>
+
+                <div ng-if="!loadingOrgUnits">
+                    <abn-tree tree-data="labre" tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="2"></abn-tree>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-5 col-md-5 col-sm-7" style="margin-left: 30px">
+        <form name="creer" role="form" novalidate >
+            <fieldset>
+                <legend>création d'établissement sanitaire</legend>
+                <div class="form-group" ng-show="facility.id">
+                    <label for="id">Id</label>
+                    <input type="text" style="background: white" class="form-control" readonly="readonly" id="id" ng-model="facility.id"/>
+                </div>
+
+
+                <div class="form-group" ng-show="facility.created">
+                    <label for="created">Date de creation de l'etablissement</label>
+                    <div>
+                        <quick-datepicker class="block" id="created" ng-model='facility.created' date-format='dd-MM-yyyy' time-format="hh:mm" placeholder='Date de création'></quick-datepicker>
+                    </div>
+                    <!--<input type="datetime" class="form-control" id="created" placeholder="Organisation unit ID" ng-model="facility.created"/>
+                    {{notreDate}}->
+                    <!--div class="row form-inline">
+                        <div-- class="form-group">
+                            <input id="created" type="date" readonly="readonly"
+                                   placeholder="Longitude" ng-model="facility.created"/>
+                            <input id="create" type="time" readonly="readonly"
+                                   placeholder="Latitude" ng-model="facility.created"/>
+                        </div-->
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter Name"
+                           ng-model="facility.name" required/>
+                    <!--label-- for="name" class="help-block" ng-show="creer.name.$invalid&&creer.name.$pristine">Entrez le nom de l'établissement</label-->
+                </div>
+
+                <div class="form-group">
+                    <label for="shortname">Nom court</label>
+                    <input type="text" name="shortname" class="form-control" id="shortname" placeholder="Enter le short name"
+                           ng-model="facility.shortName" required/>
+                    <!--label for="shortname" class="help-block" ng-show="creer.shortname.$invalid&&creer.shortname.$pristine">Entrez le nom court de l'établissement</label-->
+                </div>
+
+
+
+                <div class="form-group">
+                    <label>Date d'ouverture</label>
+                    <div>
+                    <quick-datepicker class="block" ng-model='facility.openingDate' date-format='dd-MM-yyyy' placeholder='Date de création' disable-timepicker='true' date-filter='datesMax' required></quick-datepicker>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="code">Code</label>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <input ng-if="!newCode" readonly="readonly" style="background-color: white" class="form-control" id="code" placeholder="Code" ng-model="facility.code">
+                            <select ng-if="newCode" class="form-control" id="codeN" ng-model="facility.code">
+                                <option ng-repeat="code in listesCodes | orderBy: 'code'" value="{{code}}">{{code}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8 col-sm-6" ng-if="!newCode">
+                            <button ng-show="!facility.code || geneCode" class="btn btn-primary pull-left" ng-click="Code()">Générez nouveau code</button>
+                            <button ng-show="confCode" class="btn btn-primary pull-left" ng-click="conformerCode()">Conformer code</button>
+                            <button ng-show="SuppCode" class="btn btn-primary pull-left" ng-click="supprimerCode()">Supprimer Code</button>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="district">District</label>
+                    <input type="text" name="district" class="form-control" style="background-color: white" id="district" readonly placeholder="Choisissez le district dans zone de droite"
+                    ng-model="districtName" required/>
+                    <!--select id="district" class="form-control" ng-model="facility.parent.id"
+                            ng-options="og.id as og.name for og in orgDistict | orderBy: 'name'" required>
+                        <option value="selectionner">Sélectionnez le district de l'établissement</option>
+                        <!--option ng-repeat="org in facilitiesN3 | orderBy:name" value={{org.id}}>{{org.name}}</option>
+                    </select>
+                    <!--label-- for="openingDate" class="help-block" ng-show="creer.openingDate.$invalid&&creer.openingDate.$pristine">Choisissez le district de l'etablissement</label-->
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea rows="4" id="description" class="form-control" placeholder="Enter la Description"
+                              ng-model="facility.description"></textarea>
+                </div>
+
+            </fieldset>
+
+            <fieldset ng-disabled="toutDesactive">
+            <input type="submit" ng-disabled="creer.$invalid" class="btn btn-primary pull-left" ng-click="ajouterOrgUnit()" ng-if="!facility.id" value="Ajouter"/>
+            <input type="submit" ng-disabled="creer.$invalid" class="btn btn-primary pull-left" ng-click="modifierOrgUnit()" ng-if="facility.id" value="Modifier"/>
+            <div class="pull-right">
+                <button class="btn btn-danger" ng-click="back()"><i class="fa fa-times">  Annuler</i></button>
+            </div>
+            </fieldset>
+
+        </form>
+    </div>
+    </div>
+
+</div>
